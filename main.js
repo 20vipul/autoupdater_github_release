@@ -58,7 +58,6 @@ function sendStatusToWindow(text) {
   log.info(text);
   win.webContents.send('message', text);
 }
-
 function createDefaultWindow() {
   win = new BrowserWindow({
     webPreferences: {
@@ -67,14 +66,12 @@ function createDefaultWindow() {
     }
   });
   win.webContents.openDevTools();
-
   win.on('closed', () => {
     win = null;
   });
   win.loadURL(`file://${__dirname}/version.html#v${app.getVersion()}`);
   return win;
 }
-
 autoUpdater.on('checking-for-update', () => {
   sendStatusToWindow('Checking for update...');
 })
@@ -85,9 +82,8 @@ autoUpdater.on('update-not-available', (info) => {
   sendStatusToWindow('Update not available.');
 })
 autoUpdater.on('error', (err) => {
-  log.error('Error in auto-updater:', err);
   sendStatusToWindow('Error in auto-updater. ' + err);
-});
+})
 autoUpdater.on('download-progress', (progressObj) => {
   let log_message = "Download speed: " + progressObj.bytesPerSecond;
   log_message = log_message + ' - Downloaded ' + progressObj.percent + '%';
@@ -96,11 +92,7 @@ autoUpdater.on('download-progress', (progressObj) => {
 })
 autoUpdater.on('update-downloaded', (info) => {
   sendStatusToWindow('Update downloaded');
-
-  app.relaunch({ args: process.argv.slice(1).concat(['--relaunch']) });
-  app.quit();
 });
-
 app.on('ready', function() {
   // Create the Menu
   const menu = Menu.buildFromTemplate(template);
@@ -108,7 +100,6 @@ app.on('ready', function() {
 
   createDefaultWindow();
 });
-
 app.on('window-all-closed', () => {
   app.quit();
 });
