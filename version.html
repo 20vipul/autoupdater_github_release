@@ -9,6 +9,9 @@
 <script>
 // Display the current version
 let version = window.location.hash.substring(1);
+console.log(window.location.hash);
+console.log(window.location);
+
 document.getElementById('version').innerText = version;
 
 // Listen for messages
@@ -16,6 +19,8 @@ const {ipcRenderer} = require('electron');
 ipcRenderer.on('message', function(event, text) {
   var container = document.getElementById('messages');
   var message = document.createElement('div');
+  console.log(text);
+  
   message.innerHTML = text;
   container.appendChild(message);
 })
